@@ -2,14 +2,15 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pickle
 import pandas as pd
-import sklearn
+import os
 
 app = Flask(__name__)
 CORS(app)  # This will allow requests from any origin. Adjust for production.
 
-model_path = './my-project/Back-End/model.p'
-scaler_path = './my-project/Back-End/scaler.p'
-encoder_path = './my-project/Back-End/encoder.p'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(BASE_DIR, 'model.p')
+encoder_path = os.path.join(BASE_DIR, 'encoder.p')
+scaler_path = os.path.join(BASE_DIR, 'scaler.p')
 
 file1 = open(model_path, 'rb')
 file2 = open(encoder_path, 'rb')
@@ -30,7 +31,6 @@ def submit():
     city = data.get('city')
     building_size_m2 = data.get('building_size_m2')
     land_size_m2 = data.get('land_size_m2')
-
     floors = data.get('floors')
     bedrooms = data.get('bedrooms')
     bathrooms = data.get('bathrooms')
